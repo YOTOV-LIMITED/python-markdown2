@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Python-markdown2 by YOTOV-LIMITED</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Python-markdown2</h1>
+      <h2 class="project-tagline">markdown2: A fast and complete implementation of Markdown in Python</h2>
+      <a href="https://github.com/YOTOV-LIMITED/python-markdown2" class="btn">View on GitHub</a>
+      <a href="https://github.com/YOTOV-LIMITED/python-markdown2/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/YOTOV-LIMITED/python-markdown2/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>Markdown is a light text markup format and a processor to convert that to HTML.
+The originator describes it as follows:</p>
+
+<blockquote>
+<p>Markdown is a text-to-HTML conversion tool for web writers.
+Markdown allows you to write using an easy-to-read,
+easy-to-write plain text format, then convert it to
+structurally valid XHTML (or HTML).</p>
+
+<p>-- <a href="http://daringfireball.net/projects/markdown/">http://daringfireball.net/projects/markdown/</a></p>
+</blockquote>
+
+<p>This (markdown2) is a fast and complete Python implementation of Markdown. It
+was written to closely match the behaviour of the original Perl-implemented
+Markdown.pl. Markdown2 also comes with a number of extensions (called
+"extras") for things like syntax coloring, tables, header-ids. See the
+"Extra Syntax" section below. "markdown2" supports all Python versions
+from 2.4 to 3.3 (and pypy and jython, though I don't frequently test those).</p>
+
+<p>There is another <a href="https://pythonhosted.org/Markdown/">Python
+markdown.py</a>. However, at
+least at the time this project was started, markdown2.py was faster (see the
+<a href="https://github.com/trentm/python-markdown2/wiki/Performance-Notes">Performance
+Notes</a>) and,
+to my knowledge, more correct (see <a href="https://github.com/trentm/python-markdown2/wiki/Testing-Notes">Testing
+Notes</a>).
+That was a while ago though, so you shouldn't discount Python-markdown from
+your consideration.</p>
+
+<p>Follow <a href="https://twitter.com/intent/user?screen_name=trentmick">@trentmick</a>
+for updates to python-markdown2.</p>
+
+<p>Travis-ci.org test status: <a href="http://travis-ci.org/trentm/python-markdown2"><img src="https://secure.travis-ci.org/trentm/python-markdown2.png" alt="Build Status"></a></p>
+
+<h1>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h1>
+
+<p>To install it in your Python installation run <em>one</em> of the following:</p>
+
+<pre><code>pip install markdown2
+pypm install markdown2      # if you use ActivePython (activestate.com/activepython)
+easy_install markdown2      # if this is the best you have
+python setup.py install
+</code></pre>
+
+<p>However, everything you need to run this is in "lib/markdown2.py". If it is
+easier for you, you can just copy that file to somewhere on your PythonPath
+(to use as a module) or executable path (to use as a script).</p>
+
+<h1>
+<a id="quick-usage" class="anchor" href="#quick-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick Usage</h1>
+
+<p>As a module:</p>
+
+<pre><code>&gt;&gt;&gt; import markdown2
+&gt;&gt;&gt; markdown2.markdown("*boo!*")  # or use `html = markdown_path(PATH)`
+u'&lt;p&gt;&lt;em&gt;boo!&lt;/em&gt;&lt;/p&gt;\n'
+
+&gt;&gt;&gt; from markdown2 import Markdown
+&gt;&gt;&gt; markdowner = Markdown()
+&gt;&gt;&gt; markdowner.convert("*boo!*")
+u'&lt;p&gt;&lt;em&gt;boo!&lt;/em&gt;&lt;/p&gt;\n'
+&gt;&gt;&gt; markdowner.convert("**boom!**")
+u'&lt;p&gt;&lt;strong&gt;boom!&lt;/strong&gt;&lt;/p&gt;\n'
+</code></pre>
+
+<p>As a script (CLI):</p>
+
+<pre><code>$ python markdown2.py foo.md &gt; foo.html
+</code></pre>
+
+<p>I think pip-based installation will enable this as well:</p>
+
+<pre><code>$ markdown2 foo.md &gt; foo.html
+</code></pre>
+
+<p>See the <a href="https://github.com/trentm/python-markdown2/wiki">project wiki</a>,
+<a href="https://github.com/trentm/python-markdown2/blob/master/lib/markdown2.py">lib/markdown2.py</a>
+docstrings and/or <code>python markdown2.py --help</code> for more details.</p>
+
+<h1>
+<a id="extra-syntax-aka-extensions" class="anchor" href="#extra-syntax-aka-extensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extra Syntax (aka extensions)</h1>
+
+<p>Many Markdown processors include support for additional optional syntax
+(often called "extensions") and markdown2 is no exception. With markdown2 these
+are called "extras".  Using the "footnotes" extra as an example, here is how
+you use an extra ... as a module:</p>
+
+<pre><code>$ python markdown2.py --extras footnotes foo.md &gt; foo.html
+</code></pre>
+
+<p>as a script:</p>
+
+<pre><code>&gt;&gt;&gt; import markdown2
+&gt;&gt;&gt; markdown2.markdown("*boo!*", extras=["footnotes"])
+u'&lt;p&gt;&lt;em&gt;boo!&lt;/em&gt;&lt;/p&gt;\n'
+</code></pre>
+
+<p>There are a number of currently implemented extras for tables, footnotes,
+syntax coloring of <code>&lt;pre&gt;</code>-blocks, auto-linking patterns, table of contents,
+Smarty Pants (for fancy quotes, dashes, etc.) and more. See the <a href="https://github.com/trentm/python-markdown2/wiki/Extras">Extras
+wiki page</a> for full
+details.</p>
+
+<h1>
+<a id="project" class="anchor" href="#project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project</h1>
+
+<p>The python-markdown2 project lives at
+<a href="https://github.com/trentm/python-markdown2/">https://github.com/trentm/python-markdown2/</a>.  (Note: On Mar 6, 2011 this
+project was moved from <a href="http://code.google.com/p/python-markdown2">Google Code</a>
+to here on Github.) See also, <a href="http://pypi.python.org/pypi/markdown2">markdown2 on the Python Package Index
+(PyPI)</a>.</p>
+
+<p>The change log: <a href="https://github.com/trentm/python-markdown2/blob/master/CHANGES.md">https://github.com/trentm/python-markdown2/blob/master/CHANGES.md</a></p>
+
+<p>To report a bug: <a href="https://github.com/trentm/python-markdown2/issues">https://github.com/trentm/python-markdown2/issues</a></p>
+
+<h1>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h1>
+
+<p>We welcome pull requests from the community. Please take a look at the <a href="https://github.com/trentm/python-markdown2/blob/master/TODO.txt">TODO</a> for opportunities to help this project. For those wishing to submit a pull request to <code>python-markdown2</code> please ensure it fulfills the following requirements:</p>
+
+<ul>
+<li>It must pass PEP8.</li>
+<li>It must include relevant test coverage.</li>
+<li>Bug fixes must include a regression test that exercises the bug.</li>
+<li>The entire test suite must pass.</li>
+<li>The README and/or docs are updated accordingly.</li>
+</ul>
+
+<h1>
+<a id="test-suite" class="anchor" href="#test-suite" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test Suite</h1>
+
+<p>This markdown implementation passes a fairly extensive test suite. To run it:</p>
+
+<pre><code>make test
+</code></pre>
+
+<p>The crux of the test suite is a number of "cases" directories -- each with a
+set of matching .text (input) and .html (expected output) files. These are:</p>
+
+<pre><code>tm-cases/                   Tests authored for python-markdown2 (tm=="Trent Mick")
+markdowntest-cases/         Tests from the 3rd-party MarkdownTest package
+php-markdown-cases/         Tests from the 3rd-party MDTest package
+php-markdown-extra-cases/   Tests also from MDTest package
+</code></pre>
+
+<p>See the <a href="https://github.com/trentm/python-markdown2/wiki/Testing-Notes">Testing Notes wiki
+page</a> for full
+details.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/YOTOV-LIMITED/python-markdown2">Python-markdown2</a> is maintained by <a href="https://github.com/YOTOV-LIMITED">YOTOV-LIMITED</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
